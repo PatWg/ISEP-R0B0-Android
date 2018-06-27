@@ -25,6 +25,8 @@ public class FolderActivity extends AppCompatActivity {
         TextView textView = (TextView)findViewById(R.id.text_view);
         String title = intent.getStringExtra("title");
         textView.setText(title);
+        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        Toast.makeText(FolderActivity.this, "CLICK: " + root, Toast.LENGTH_SHORT).show();
     }
     public void button (View view)
     {

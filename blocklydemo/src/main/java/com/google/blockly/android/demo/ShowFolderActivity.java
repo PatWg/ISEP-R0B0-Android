@@ -1,6 +1,8 @@
 package com.google.blockly.android.demo;
 
 import android.os.Environment;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,10 @@ import java.util.List;
 import android.app.ListActivity;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.net.Uri;
+
+import android.content.Intent;
+import android.content.IntentFilter;
 
 import junit.framework.Test;
 
@@ -30,7 +36,7 @@ public class ShowFolderActivity extends ListActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_folder);
-        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/block");
+        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/folder");
         lv = getListView();
         ListDir(root);
         ListView listView = getListView();
@@ -43,6 +49,7 @@ public class ShowFolderActivity extends ListActivity implements AdapterView.OnIt
         // TODO Auto-generated method stub
         String item = adapter.getItemAtPosition(position).toString();
         Toast.makeText(ShowFolderActivity.this, "CLICK: " + item, Toast.LENGTH_SHORT).show();
+        sendfile(item);
     }
 
     void ListDir(File f) {
@@ -53,5 +60,27 @@ public class ShowFolderActivity extends ListActivity implements AdapterView.OnIt
         }
         ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fileList);
         setListAdapter(directoryList);
+    }
+
+    public void sendfile(String filename) {
+        // TODO Auto-generated method stub
+        File file = new File(filename);
+        Uri uriToImage = FileProvider.getUriForFile(
+                context, FILES_AUTHORITY, file);
+        Intent shareIntent = ShareCompat.IntentBuilder.from(activity)
+                .setStream(uriToImage)
+                .getIntent();
+// Provide read access
+        shareIntent.setData(uriToImage);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+
+
+        Intent shareIntent = ShareCompat.IntentBuilder
+                .setType("image/*")
+        intent.setPackage("com.android.bluetooth");
+        Uri outputFileUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
+        intent.putExtra(Intent.EXTRA_STREAM,outputFileUri);
+        startActivity(intent);
     }
 }

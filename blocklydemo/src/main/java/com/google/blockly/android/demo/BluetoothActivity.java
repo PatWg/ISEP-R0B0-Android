@@ -100,8 +100,9 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: called.");
         super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver1);
-        unregisterReceiver(mBroadcastReceiver3);
+
+        //unregisterReceiver(mBroadcastReceiver1);
+        //unregisterReceiver(mBroadcastReceiver3);
         unregisterReceiver(mBroadcastReceiver4);
     }
     @Override
@@ -114,6 +115,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
 
         //Broadcasts when bond state changes (ie:pairing)
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+
         registerReceiver(mBroadcastReceiver4, filter);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();

@@ -12,18 +12,38 @@ import java.io.FileNotFoundException;
 import android.widget.Toast;
 import java.util.Scanner;
 import java.io.*;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.Manifest;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 public class CodeActivity extends AppCompatActivity
 {
   public  String script;
   private static final int MAX_SIZE = 8192;
   public String result;
   public Button save;
-  public String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/block";
+  public String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/folder";
   public EditText editText;
+  /**
+   * permissions request code
+   */
+  private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
+
+  /**
+   * Permissions that need to be explicitly requested from end user.
+   */
+  private static final String[] REQUIRED_SDK_PERMISSIONS = new String[] {
+          Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE };
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    checkPermissions();
     setContentView(R.layout.activity_code);
     Intent intent = getIntent();
     TextView textView = (TextView)findViewById(R.id.code_text_view);
@@ -64,7 +84,7 @@ public class CodeActivity extends AppCompatActivity
     result.append(run[run.length-2])
             .append("\n")
             .append(run[run.length-1]);
-    return result.toString();
+    return result.toString() ;
   }
   /**
    * This method is the one taken from https://github.com/bbcmicrobit/PythonEditor/blob/1df10c07a271d9597eac318aef2e5dc1259af24a/python-main.js#L68
@@ -123,35 +143,84 @@ public class CodeActivity extends AppCompatActivity
   {
     String  fname = String.valueOf(editText.getText());
     File file = new File (path + "/"+fname+".hex");
+
     String  saveText = result;
 
     Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
 
     Save (file, saveText);
   }
+
+  /**
+   * Checks the dynamically-controlled permissions and requests missing permissions from end user.
+   */
+  protected void checkPermissions() {
+    final List<String> missingPermissions = new ArrayList<String>();
+    // check all required dynamic permissions
+    for (final String permission : REQUIRED_SDK_PERMISSIONS) {
+      final int result = ContextCompat.checkSelfPermission(this, permission);
+      if (result != PackageManager.PERMISSION_GRANTED) {
+        missingPermissions.add(permission);
+      }
+    }
+    if (!missingPermissions.isEmpty()) {
+      // request all missing permissions
+      final String[] permissions = missingPermissions
+              .toArray(new String[missingPermissions.size()]);
+      ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_ASK_PERMISSIONS);
+    } else {
+      final int[] grantResults = new int[REQUIRED_SDK_PERMISSIONS.length];
+      Arrays.fill(grantResults, PackageManager.PERMISSION_GRANTED);
+      onRequestPermissionsResult(REQUEST_CODE_ASK_PERMISSIONS, REQUIRED_SDK_PERMISSIONS,
+              grantResults);
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                         @NonNull int[] grantResults) {
+    switch (requestCode) {
+      case REQUEST_CODE_ASK_PERMISSIONS:
+        for (int index = permissions.length - 1; index >= 0; --index) {
+          if (grantResults[index] != PackageManager.PERMISSION_GRANTED) {
+            // exit the app if one permission is not granted
+            Toast.makeText(this, "Required permission '" + permissions[index]
+                    + "' not granted, exiting", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+          }
+        }
+        // all permissions were granted
+       // initialize();
+        break;
+    }
+  }
+
   public static void Save(File file, String data)
   {
+
     FileOutputStream fos = null;
     try
     {
       fos = new FileOutputStream(file);
+
     }
     catch (FileNotFoundException e) {e.printStackTrace();}
     try
     {
       try
       {
-          fos.write(data.getBytes());
+        fos.write(data.getBytes());
       }
-      catch (IOException e) {e.printStackTrace();}
+    catch (IOException e) {e.printStackTrace();}
     }
     finally
     {
       try
       {
-        fos.close();
+       fos.close();
       }
       catch (IOException e) {e.printStackTrace();}
-    }
-  }
+     }
+   }
 }
