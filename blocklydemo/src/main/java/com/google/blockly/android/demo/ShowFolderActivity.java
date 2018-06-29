@@ -65,19 +65,9 @@ public class ShowFolderActivity extends ListActivity implements AdapterView.OnIt
     public void sendfile(String filename) {
         // TODO Auto-generated method stub
         File file = new File(filename);
-        Uri uriToImage = FileProvider.getUriForFile(
-                context, FILES_AUTHORITY, file);
-        Intent shareIntent = ShareCompat.IntentBuilder.from(activity)
-                .setStream(uriToImage)
-                .getIntent();
-// Provide read access
-        shareIntent.setData(uriToImage);
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-
-
-        Intent shareIntent = ShareCompat.IntentBuilder
-                .setType("image/*")
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
         intent.setPackage("com.android.bluetooth");
         Uri outputFileUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
         intent.putExtra(Intent.EXTRA_STREAM,outputFileUri);
