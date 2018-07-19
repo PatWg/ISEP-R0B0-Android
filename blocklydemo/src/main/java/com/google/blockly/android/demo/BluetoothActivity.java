@@ -1,5 +1,6 @@
 package com.google.blockly.android.demo;
 
+import android.Manifest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.bluetooth.BluetoothAdapter;
@@ -16,9 +17,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.os.Build;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
-
+/**
+ * Simplest implementation of Bluetooth.
+ */
 public class BluetoothActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "BluetoothActivity";
     BluetoothAdapter mBluetoothAdapter;
@@ -132,6 +137,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
                 enableDisableBT();
             }
         });
+        Toast.makeText(this, "Bluetooth process over", Toast.LENGTH_LONG).show();
 
     }
     public void enableDisableBT(){
@@ -189,7 +195,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
      * NOTE: This will only execute on versions > LOLLIPOP because it is not needed otherwise.
      */
     private void checkBTPermissions() {
-        /*if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
             permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
             if (permissionCheck != 0) {
@@ -198,7 +204,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
             }
         }else{
             Log.d(TAG, "checkBTPermissions: No need to check permissions. SDK version < LOLLIPOP.");
-        }*/
+        }
     }
 
     @Override
@@ -209,7 +215,10 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         Log.d(TAG, "onItemClick: You Clicked on a device.");
         String deviceName = mBTDevices.get(i).getName();
         String deviceAddress = mBTDevices.get(i).getAddress();
-
+        Intent intent = new Intent(this, ShowFolderActivity.class);
+        intent.putExtra("address", deviceAddress);
+        intent.putExtra("name", deviceName);
+        startActivity(intent);
         Log.d(TAG, "onItemClick: deviceName = " + deviceName);
         Log.d(TAG, "onItemClick: deviceAddress = " + deviceAddress);
 

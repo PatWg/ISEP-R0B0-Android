@@ -15,7 +15,9 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * In this Activity a Button is created and onclick it makes to show all the files.
+ */
 public class FolderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,5 @@ public class FolderActivity extends AppCompatActivity {
     {
         Intent  intent = new Intent(this, ShowFolderActivity.class);
         startActivity(intent);
-
-
     }
     }

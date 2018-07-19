@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.google.blockly.android.demo.R;
 
 import java.util.ArrayList;
-
+/**
+ * In this activity the list of bluetooth connection is listed based on their DeviceName and DeviceAddress.
+ */
 public class DeviceListAdapter  extends ArrayAdapter<BluetoothDevice> {
     private LayoutInflater mLayoutInflater;
     private ArrayList<BluetoothDevice> mDevices;
@@ -20,6 +22,7 @@ public class DeviceListAdapter  extends ArrayAdapter<BluetoothDevice> {
         this.mDevices = devices;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mViewResourceId = tvResourceId;
+
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = mLayoutInflater.inflate(mViewResourceId, null);

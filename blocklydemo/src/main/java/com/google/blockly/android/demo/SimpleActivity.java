@@ -108,7 +108,10 @@ public class SimpleActivity extends AbstractBlocklyActivity {
     protected String getWorkspaceAutosavePath() {
         return AUTOSAVE_FILENAME;
     }
-
+    /**
+     * From the Abstract Activity the generated code is send to this function.
+     * The generatedCode is in Python.
+     */
     @Override
     public void codeIsGenerated(String generatedCode) {
         super.codeIsGenerated(generatedCode);
@@ -117,6 +120,9 @@ public class SimpleActivity extends AbstractBlocklyActivity {
         intent.putExtra("generated_code", generatedCode);
         startActivity(intent);
     }
+    /**
+     * The function is called to list all the .hex files available on the specified folder.
+     */
     @Override
     public void getdocument() {
         super.getdocument();
@@ -126,6 +132,9 @@ public class SimpleActivity extends AbstractBlocklyActivity {
         intent.putExtra("title", file);
         startActivity(intent);
     }
+    /**
+     * This function is called to perform all the operation in bluetooth.
+     */
     @Override
     public void getbluetooth() {
         super.getdocument();

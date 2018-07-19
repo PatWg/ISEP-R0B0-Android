@@ -21,13 +21,18 @@ import android.Manifest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+/**
+ * In this Activity the Python code gets converted into hes code and saved in the specifiled location.
+ */
+
 public class CodeActivity extends AppCompatActivity
 {
   public  String script;
   private static final int MAX_SIZE = 8192;
   public String result;
   public Button save;
-  public String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/folder";
+  public String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download";
   public EditText editText;
   /**
    * permissions request code
