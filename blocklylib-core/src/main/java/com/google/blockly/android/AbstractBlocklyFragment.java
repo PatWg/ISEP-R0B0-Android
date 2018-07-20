@@ -143,11 +143,11 @@ public abstract class AbstractBlocklyFragment extends Fragment {
 
     public void onFolder() {
 
-        mBlocklyActivityHelper.onfiles();
+        mBlocklyActivityHelper.onFiles();
     }
 
     private void onBluetooth() {
-        mBlocklyActivityHelper.ondevices();
+        mBlocklyActivityHelper.onDevices();
     }
 
 

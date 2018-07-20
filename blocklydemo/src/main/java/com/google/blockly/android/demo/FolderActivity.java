@@ -35,4 +35,4 @@ public class FolderActivity extends AppCompatActivity {
         Intent  intent = new Intent(this, ShowFolderActivity.class);
         startActivity(intent);
     }
-    }
+}

@@ -725,12 +725,12 @@ public class BlocklyActivityHelper {
         mDialogFragment = fragment;
     }
 
-    public void onfiles() {
-        mLoggingCodeGeneratorCallback.getfile();
+    public void onFiles() {
+        mLoggingCodeGeneratorCallback.getFile();
 
     }
-    public void ondevices() {
-        mLoggingCodeGeneratorCallback.getdevices();
+    public void onDevices() {
+        mLoggingCodeGeneratorCallback.getDevices();
 
     }
 }

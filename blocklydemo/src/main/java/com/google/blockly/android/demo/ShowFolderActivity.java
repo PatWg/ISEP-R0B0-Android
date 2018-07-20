@@ -21,15 +21,13 @@ import android.content.Intent;
 /**
  * The Selected files is send to the connected device via bluetooth.
  */
-public class ShowFolderActivity extends ListActivity implements AdapterView.OnItemClickListener {
+public class ShowFolderActivity extends ListActivity {
     ListView lv;
     private List<String> fileList = new ArrayList<String>();
     public BluetoothAdapter myBluetooth = null;
-    String address = null;
-    private BluetoothSocket btSocket = null;
-    private static final String TAG = "BluetoothActivity";
-    private boolean isBtConnected = false;
-    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+
+    private static final String TAG = "ShowFolderActivity";
     private FilenameFilter textFilter = new FilenameFilter() {
         @Override
         public boolean accept(File file, String s) {
@@ -44,16 +42,19 @@ public class ShowFolderActivity extends ListActivity implements AdapterView.OnIt
         myBluetooth = BluetoothAdapter.getDefaultAdapter();
         Intent intent = getIntent();
         String address = intent.getStringExtra("address");
-        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/folder");
+        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download");
         lv = getListView();
         ListDir(root);
         ListView listView = getListView();
-        listView.setOnItemClickListener(this);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                itemClick(adapterView,i);
+            }
+        });
 
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
+    public void itemClick(AdapterView<?> adapter, int position) {
         // TODO Auto-generated method stub
         String item = adapter.getItemAtPosition(position).toString();
         Toast.makeText(ShowFolderActivity.this, "CLICK: " + item, Toast.LENGTH_SHORT).show();
@@ -82,12 +83,7 @@ public class ShowFolderActivity extends ListActivity implements AdapterView.OnIt
         StrictMode.setVmPolicy(builder.build());
         Toast.makeText(ShowFolderActivity.this, "Sending File to ......",Toast.LENGTH_SHORT).show();
         startActivity(intent);*/
-
-
-
-
-
- }
+    }
 }
 
 

@@ -123,9 +123,8 @@ public class SimpleActivity extends AbstractBlocklyActivity {
     /**
      * The function is called to list all the .hex files available on the specified folder.
      */
-    @Override
-    public void getdocument() {
-        super.getdocument();
+
+    public void getDocument() {
         String file = "Select the File you need to RUN";
         Log.d("title", file);
         Intent intent = new Intent(this, FolderActivity.class);
@@ -135,9 +134,7 @@ public class SimpleActivity extends AbstractBlocklyActivity {
     /**
      * This function is called to perform all the operation in bluetooth.
      */
-    @Override
-    public void getbluetooth() {
-        super.getdocument();
+    public void getBluetooth() {
         Intent intent = new Intent(this, BluetoothActivity.class);
         startActivity(intent);
     }

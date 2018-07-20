@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Simplest implementation of Bluetooth.
  */
-public class BluetoothActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class BluetoothActivity extends AppCompatActivity {
     private static final String TAG = "BluetoothActivity";
     BluetoothAdapter mBluetoothAdapter;
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
@@ -129,7 +129,12 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        lvNewDevices.setOnItemClickListener(BluetoothActivity.this);
+        lvNewDevices.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                itemClick(i);
+            }
+        });
         btnONOFF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,9 +211,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
             Log.d(TAG, "checkBTPermissions: No need to check permissions. SDK version < LOLLIPOP.");
         }
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void itemClick(int i) {
         //first cancel discovery because its very memory intensive.
         mBluetoothAdapter.cancelDiscovery();
 

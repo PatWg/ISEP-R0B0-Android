@@ -201,14 +201,12 @@ public class CodeActivity extends AppCompatActivity
     }
   }
 
-  public static void Save(File file, String data)
+  private void Save(File file, String data)
   {
-
     FileOutputStream fos = null;
     try
     {
       fos = new FileOutputStream(file);
-
     }
     catch (FileNotFoundException e) {e.printStackTrace();}
     try
@@ -227,5 +225,5 @@ public class CodeActivity extends AppCompatActivity
       }
       catch (IOException e) {e.printStackTrace();}
      }
-   }
+  }
 }

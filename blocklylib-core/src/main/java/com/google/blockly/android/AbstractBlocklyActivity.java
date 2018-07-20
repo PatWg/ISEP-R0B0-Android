@@ -129,10 +129,10 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
             onSaveWorkspace();
             return true;
         }else if (id == R.id.action_flash) {
-            getdocument();
+            getDocument();
             return true;
         }else if (id == R.id.action_bluetooth) {
-            getbluetooth();
+            getBluetooth();
             return true;
         }else if (id == R.id.action_load) {
             onLoadWorkspace();
@@ -692,6 +692,6 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
 
     }
 
-    public void getdocument(){}
-    public void getbluetooth(){}
+    public void getDocument(){}
+    public void getBluetooth(){}
 }

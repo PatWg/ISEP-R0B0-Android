@@ -47,10 +47,10 @@ public class LoggingCodeGeneratorCallback implements CodeGenerationRequest.CodeG
         }
     }
 
-    public void getfile() {
-        mActivity.getdocument();
+    public void getFile() {
+        mActivity.getDocument();
     }
-    public void getdevices() {
-        mActivity.getbluetooth();
+    public void getDevices() {
+        mActivity.getBluetooth();
     }
 }
